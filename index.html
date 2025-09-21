@@ -18,108 +18,132 @@
 <body class="bg-[#cde7ec] min-h-screen flex items-center justify-center p-4 sm:p-6">
 
     <main class="w-full max-w-4xl mx-auto">
-        <!-- Kelime Yönetimi -->
-        <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+        <!-- Çocuk Dostu Yönetim Merkezi -->
+        <div class="bg-gradient-to-r from-blue-100 to-purple-100 rounded-2xl shadow-lg p-4 mb-6 border-2 border-blue-200">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-lg font-bold text-[#00424a]">📝 Kelime Yönetimi</h2>
-                <button id="toggle-word-editor" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors">
-                    ✏️ Kelimeleri Düzenle
+                <h2 class="text-xl font-bold text-[#00424a] flex items-center gap-2">
+                    🎮 <span class="text-purple-600">Yönetim</span> <span class="text-blue-600">Merkezi</span>
+                </h2>
+                <button id="toggle-management-center" class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-full hover:from-blue-600 hover:to-purple-600 transition-all transform hover:scale-105 shadow-md text-lg font-bold">
+                    🛠️ Ayarları Aç/Kapat
                 </button>
             </div>
             
-            <!-- Kelime Editörü (Başlangıçta gizli) -->
-            <div id="word-editor" class="hidden">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="word-input" class="block text-sm font-medium text-gray-700 mb-2">Yeni Kelime:</label>
-                        <input type="text" id="word-input" placeholder="Örn: Bilgisayar" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#00424a] focus:border-transparent">
+            <!-- Yönetim Merkezi İçeriği (Başlangıçta gizli) -->
+            <div id="management-center" class="hidden">
+                <!-- Kelime Yönetimi Bölümü -->
+                <div class="bg-white rounded-xl p-4 mb-4 shadow-md border border-green-200">
+                    <h3 class="text-lg font-bold text-green-600 mb-4 flex items-center gap-2">
+                        📚 Kelime Dünyası
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label for="word-input" class="block text-lg font-bold text-gray-700 mb-2 flex items-center gap-2">
+                                ✏️ Yeni Kelime:
+                            </label>
+                            <input type="text" id="word-input" placeholder="Örneğin: Kelebek" class="w-full p-3 border-2 border-green-300 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent text-lg">
+                        </div>
+                        <div>
+                            <label for="syllables-input" class="block text-lg font-bold text-gray-700 mb-2 flex items-center gap-2">
+                                🔤 Heceler:
+                                <button id="auto-syllable" type="button" class="text-sm bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-3 py-1 rounded-full hover:from-yellow-500 hover:to-orange-500 transform hover:scale-105 shadow-sm">
+                                    🤖 Otomatik
+                                </button>
+                            </label>
+                            <input type="text" id="syllables-input" placeholder="Ke,le,bek (virgülle ayır)" class="w-full p-3 border-2 border-green-300 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent text-lg">
+                            <div id="syllable-warning" class="hidden mt-2 text-sm text-orange-600 bg-orange-50 p-2 rounded-lg">
+                                ⚠️ Otomatik heceleme bazen hata yapabilir. Kontrol etmeyi unutma!
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <label for="syllables-input" class="block text-sm font-medium text-gray-700 mb-2">
-                            Heceler (virgülle ayırın):
-                            <button id="auto-syllable" type="button" class="ml-2 text-xs bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">
-                                🤖 Otomatik Ayır
-                            </button>
-                        </label>
-                        <input type="text" id="syllables-input" placeholder="Örn: An,ne veya 🤖 butonunu kullan" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#00424a] focus:border-transparent">
-                        <div id="syllable-warning" class="hidden mt-1 text-xs text-orange-600">
-                            ⚠️ Otomatik heceleme hata yapabilir. Lütfen kontrol edin ve gerekirse düzenleyin.
+                    
+                    <div class="flex gap-3 mb-4 flex-wrap">
+                        <button id="add-word" class="bg-gradient-to-r from-green-400 to-green-500 text-white px-5 py-3 rounded-full hover:from-green-500 hover:to-green-600 transition-all transform hover:scale-105 shadow-md font-bold text-lg">
+                            ➕ Kelimeyi Ekle
+                        </button>
+                        <button id="generate-random-words" class="bg-gradient-to-r from-purple-400 to-pink-400 text-white px-5 py-3 rounded-full hover:from-purple-500 hover:to-pink-500 transition-all transform hover:scale-105 shadow-md font-bold text-lg">
+                            🎲 Sürpriz Kelimeler
+                        </button>
+                        <button id="reset-words" class="bg-gradient-to-r from-blue-400 to-cyan-400 text-white px-5 py-3 rounded-full hover:from-blue-500 hover:to-cyan-500 transition-all transform hover:scale-105 shadow-md font-bold text-lg">
+                            🏠 Başlangıç Kelimeleri
+                        </button>
+                        <button id="clear-all-words" class="bg-gradient-to-r from-gray-400 to-gray-500 text-white px-5 py-3 rounded-full hover:from-gray-500 hover:to-gray-600 transition-all transform hover:scale-105 shadow-md font-bold text-lg">
+                            🗑️ Hepsini Sil
+                        </button>
+                    </div>
+                    
+                    <!-- Kayıt Durumu -->
+                    <div class="mb-4 p-3 bg-blue-50 rounded-xl border border-blue-200">
+                        <div class="flex justify-between items-center">
+                            <span id="storage-status" class="text-blue-700 font-bold flex items-center gap-2">💾 Otomatik Kayıt Çalışıyor</span>
+                            <button id="manual-save" class="text-blue-600 hover:text-blue-800 underline font-bold">📥 Şimdi Kaydet</button>
+                        </div>
+                    </div>
+
+                    <!-- Mevcut Kelimeler Listesi -->
+                    <div class="border-t-2 border-green-200 pt-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="text-lg font-bold text-gray-700 flex items-center gap-2">📋 Kelime Listem:</h4>
+                            <span id="word-count" class="text-lg text-purple-600 font-bold">0 kelime</span>
+                        </div>
+                        <div id="current-words-list" class="max-h-40 overflow-y-auto bg-gray-50 p-3 rounded-xl border-2 border-gray-200">
+                            <!-- Kelimeler buraya listelenecek -->
                         </div>
                     </div>
                 </div>
-                <div class="flex gap-2 mb-4 flex-wrap">
-                    <button id="add-word" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors">
-                        ➕ Kelime Ekle
-                    </button>
-                    <button id="generate-random-words" class="bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition-colors">
-                        🎲 Rastgele 10 Kelime
-                    </button>
-                    <button id="reset-words" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors">
-                        🔄 Varsayılan Kelimeleri Yükle
-                    </button>
-                    <button id="clear-all-words" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors">
-                        🗑️ Tümünü Temizle
-                    </button>
-                </div>
-                
-                <!-- Kayıt Durumu -->
-                <div class="mb-4 p-2 bg-blue-50 rounded-md">
-                    <div class="flex justify-between items-center text-sm">
-                        <span id="storage-status" class="text-blue-700">💾 Otomatik kayıt aktif</span>
-                        <button id="manual-save" class="text-blue-600 hover:text-blue-800 underline">El ile kaydet</button>
-                    </div>
-                </div>
 
-                <!-- Mevcut Kelimeler Listesi -->
-                <div class="border-t pt-4">
-                    <div class="flex justify-between items-center mb-2">
-                        <h3 class="text-md font-semibold text-gray-700">Mevcut Kelimeler:</h3>
-                        <span id="word-count" class="text-sm text-gray-500">0 kelime</span>
+                <!-- Ses Ayarları Bölümü -->
+                <div class="bg-white rounded-xl p-4 shadow-md border border-orange-200">
+                    <h3 class="text-lg font-bold text-orange-600 mb-4 flex items-center gap-2">
+                        🔊 Ses Dünyası
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="voice-select" class="block text-lg font-bold text-gray-700 mb-2 flex items-center gap-2">
+                                🎭 Hangi Sesi İstiyorsun:
+                            </label>
+                            <select id="voice-select" class="w-full p-3 border-2 border-orange-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-transparent text-lg">
+                                <option value="">Sesler hazırlanıyor...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="speed-select" class="block text-lg font-bold text-gray-700 mb-2 flex items-center gap-2">
+                                🐌🐰 Ne Kadar Hızlı:
+                            </label>
+                            <select id="speed-select" class="w-full p-3 border-2 border-orange-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-transparent text-lg">
+                                <option value="0.5">🐌 Çok Yavaş</option>
+                                <option value="0.7" selected>🚶 Yavaş</option>
+                                <option value="0.85">🚴 Normal</option>
+                                <option value="1.0">🏃 Hızlı</option>
+                                <option value="1.2">🚀 Çok Hızlı</option>
+                            </select>
+                        </div>
                     </div>
-                    <div id="current-words-list" class="max-h-32 overflow-y-auto bg-gray-50 p-2 rounded-md">
-                        <!-- Kelimeler buraya listelenecek -->
+                    
+                    <div class="mt-4 flex gap-3 items-center flex-wrap">
+                        <button id="test-voice" class="bg-gradient-to-r from-orange-400 to-red-400 text-white px-5 py-3 rounded-full hover:from-orange-500 hover:to-red-500 transition-all transform hover:scale-105 shadow-md font-bold text-lg">
+                            🎵 Sesi Dene
+                        </button>
+                        <button id="refresh-voices" class="bg-gradient-to-r from-gray-400 to-gray-500 text-white px-5 py-3 rounded-full hover:from-gray-500 hover:to-gray-600 transition-all transform hover:scale-105 shadow-md font-bold text-lg">
+                            🔄 Sesleri Yenile
+                        </button>
+                        <div class="text-lg text-gray-600 font-bold flex items-center gap-2">
+                            <span id="voice-status">📢 Sesler hazırlanıyor...</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Ses Ayarları Menüsü -->
-        <div class="bg-white rounded-lg shadow-md p-4 mb-6">
-            <h2 class="text-lg font-bold text-[#00424a] mb-4">🔊 Ses Ayarları</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label for="voice-select" class="block text-sm font-medium text-gray-700 mb-2">Ses Seçimi:</label>
-                    <select id="voice-select" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#00424a] focus:border-transparent">
-                        <option value="">Sesler yükleniyor...</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="speed-select" class="block text-sm font-medium text-gray-700 mb-2">Okuma Hızı:</label>
-                    <select id="speed-select" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#00424a] focus:border-transparent">
-                        <option value="0.5">Çok Yavaş</option>
-                        <option value="0.7" selected>Yavaş</option>
-                        <option value="0.85">Normal</option>
-                        <option value="1.0">Hızlı</option>
-                        <option value="1.2">Çok Hızlı</option>
-                    </select>
-                </div>
-            </div>
-            <div class="mt-4 flex gap-2 items-center">
-                <button id="test-voice" class="bg-[#00424a] text-white px-4 py-2 rounded-md hover:bg-[#003c44] transition-colors">
-                    🎵 Sesi Test Et
-                </button>
-                <button id="refresh-voices" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors">
-                    🔄 Sesleri Yenile
-                </button>
-                <div class="text-sm text-gray-600">
-                    <span id="voice-status">📢 Sesler hazırlanıyor...</span>
-                </div>
-            </div>
+        <!-- Ana Başlık - Daha Görünür ve Çocuk Dostu -->
+        <div class="text-center mb-8 sm:mb-12">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 mb-4 animate-pulse">
+                🌟 Türkçe Okuma Öğreniyorum 🌟
+            </h1>
+            <p class="text-xl text-[#00424a] font-bold">Harfleri tıklayarak seslerini duyabilirsin! 🎵</p>
         </div>
-
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-[#00424a] text-center mb-8 sm:mb-12">
-            Türkçe Okuma Öğreniyorum
-        </h1>
         
         <div id="words-container" class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-8">
             <!-- Words will be dynamically inserted here by JavaScript -->
@@ -127,8 +151,8 @@
         
         <!-- Eğlenceli Yenileme Butonu - En Altta -->
         <div class="flex justify-center mt-8 mb-6">
-            <button id="fun-refresh" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-full shadow-lg transform transition-all duration-200 hover:scale-105 active:scale-95 animate-pulse text-lg">
-                🌟 Kelimeleri Yenile! 🎨
+            <button id="fun-refresh" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-5 px-10 rounded-full shadow-xl transform transition-all duration-200 hover:scale-110 active:scale-95 animate-pulse text-xl border-4 border-white">
+                � Yeni Kelimeler Getir! �
             </button>
         </div>
     </main>
@@ -191,9 +215,9 @@
             const refreshVoicesBtn = document.getElementById('refresh-voices');
             const voiceStatus = document.getElementById('voice-status');
             
-            // Kelime editörü elementleri
-            const toggleWordEditor = document.getElementById('toggle-word-editor');
-            const wordEditor = document.getElementById('word-editor');
+            // Yönetim merkezi elementleri
+            const toggleManagementCenter = document.getElementById('toggle-management-center');
+            const managementCenter = document.getElementById('management-center');
             const wordInput = document.getElementById('word-input');
             const syllablesInput = document.getElementById('syllables-input');
             const addWordBtn = document.getElementById('add-word');
@@ -671,7 +695,7 @@
             function funRefresh() {
                 // Buton animasyonunu başlat
                 funRefreshBtn.classList.add('animate-bounce');
-                funRefreshBtn.textContent = '🎭 Yenileniyor...';
+                funRefreshBtn.textContent = '🎭 Hazırlanıyor...';
                 funRefreshBtn.disabled = true;
                 
                 // Önce mevcut kelimeleri temizle ve rastgele yenilerini oluştur (sessizce)
@@ -725,9 +749,9 @@
                     // Butonu eski haline getir
                     setTimeout(() => {
                         funRefreshBtn.classList.remove('animate-bounce');
-                        funRefreshBtn.textContent = '🌟 Kelimeleri Yenile! 🎨';
+                        funRefreshBtn.textContent = '� Yeni Kelimeler Getir! �';
                         funRefreshBtn.disabled = false;
-                        funRefreshBtn.className = 'bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-200 hover:scale-105 active:scale-95 animate-pulse';
+                        funRefreshBtn.className = 'bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-5 px-10 rounded-full shadow-xl transform transition-all duration-200 hover:scale-110 active:scale-95 animate-pulse text-xl border-4 border-white';
                         
                         // Başarı mesajı göster
                         const successMsg = document.createElement('div');
@@ -1096,15 +1120,15 @@
                 }, 300);
             });
 
-            // Kelime editörü toggle
-            toggleWordEditor.addEventListener('click', () => {
-                if (wordEditor.classList.contains('hidden')) {
-                    wordEditor.classList.remove('hidden');
-                    toggleWordEditor.textContent = '📖 Editörü Kapat';
+            // Yönetim merkezi toggle
+            toggleManagementCenter.addEventListener('click', () => {
+                if (managementCenter.classList.contains('hidden')) {
+                    managementCenter.classList.remove('hidden');
+                    toggleManagementCenter.innerHTML = '🎮 <span class="text-yellow-300">Ayarları Kapat</span>';
                     updateCurrentWordsList();
                 } else {
-                    wordEditor.classList.add('hidden');
-                    toggleWordEditor.textContent = '✏️ Kelimeleri Düzenle';
+                    managementCenter.classList.add('hidden');
+                    toggleManagementCenter.innerHTML = '🛠️ Ayarları Aç/Kapat';
                 }
             });
 
@@ -1198,7 +1222,7 @@
 
             // Ses test butonu
             testVoiceBtn.addEventListener('click', () => {
-                playSyllable('Merhaba, bu bir ses testidir.');
+                playSyllable('Merhaba! Ben senin arkadaşın, beraber kelime öğreneceğiz!');
             });
 
             // Ses yükleme deneme fonksiyonu
