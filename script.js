@@ -798,27 +798,57 @@ function funRefresh() {
     }, 2000);
 }
 
-// Bildirim göster
+// Stabil bildirim sistemi
 function showNotification(message, className = 'notification') {
+    // Mevcut aynı tip bildirimleri temizle
+    const existingNotifications = document.querySelectorAll(`.${className}`);
+    existingNotifications.forEach(notif => {
+        if (notif.parentNode) {
+            notif.parentNode.removeChild(notif);
+        }
+    });
+    
     const notification = document.createElement('div');
     notification.textContent = message;
     notification.className = className;
-    document.body.appendChild(notification);
+    
+    // Bildirim konteynerini oluştur/al
+    let notificationContainer = document.getElementById('notification-container');
+    if (!notificationContainer) {
+        notificationContainer = document.createElement('div');
+        notificationContainer.id = 'notification-container';
+        notificationContainer.style.cssText = `
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1000;
+        `;
+        document.body.appendChild(notificationContainer);
+    }
+    
+    notificationContainer.appendChild(notification);
+    
+    // Animasyonla göster
+    requestAnimationFrame(() => {
+        notification.classList.add('show');
+    });
+    
+    // Otomatik gizleme
+    const hideTimeout = className.includes('success') ? 1500 : 
+                      className.includes('center') ? 2000 : 3000;
     
     setTimeout(() => {
-        if (notification.parentNode) {
-            if (className === 'notification-center') {
-                notification.style.transition = 'all 0.5s ease-out';
-                notification.style.transform = 'translate(-50%, -100px) scale(0.5)';
-                notification.style.opacity = '0';
-                setTimeout(() => {
+        if (notification && notification.parentNode) {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                if (notification.parentNode) {
                     notification.parentNode.removeChild(notification);
-                }, 500);
-            } else {
-                notification.parentNode.removeChild(notification);
-            }
+                }
+            }, 300);
         }
-    }, className === 'notification-center' ? 2000 : 3000);
+    }, hideTimeout);
 }
 
 // Gelişmiş kelime yönetimi fonksiyonları
@@ -857,8 +887,10 @@ function saveWordsToStorage() {
         localStorage.setItem('turkishWords_timestamp', new Date().toISOString());
         console.log(`💾 ${currentWords.length} kelime kaydedildi`);
         
-        // Kayıt başarı mesajı göster
-        showNotification('✅ Kaydedildi', 'notification-success');
+        // Sessiz kayıt - çok fazla bildirim gösterme
+        if (Math.random() > 0.7) { // %30 olasılıkla göster
+            showNotification('💾', 'notification-success');
+        }
     } catch (e) {
         console.error('❌ localStorage kayıt hatası:', e);
         alert('Kelimeler kaydedilemedi! Tarayıcı depolama alanı dolu olabilir.');

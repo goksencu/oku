@@ -4,6 +4,17 @@
 body {
     font-family: 'Nunito', sans-serif;
     -webkit-tap-highlight-color: transparent; /* Mobilde gri tap highlight'ı devre dışı bırakır */
+    overflow-x: hidden; /* Yatay kaydırmayı engelle */
+}
+
+/* Genel Stabilite */
+* {
+    box-sizing: border-box;
+}
+
+.stable {
+    will-change: auto; /* GPU accelerasyon optimizasyonu */
+    backface-visibility: hidden; /* Animasyon titremesini engelle */
 }
 
 /* Ana konteyner stili */
@@ -30,6 +41,18 @@ body {
     padding: 1rem;
     margin-bottom: 1.5rem;
     border: 2px solid #bfdbfe;
+    transition: all 0.3s ease-out;
+    max-height: 1000px;
+    overflow: hidden;
+}
+
+.management-center.hidden {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    transform: translateY(-10px);
 }
 
 /* Toggle butonu stili */
@@ -450,7 +473,7 @@ body {
     animation: bounce 1s infinite;
 }
 
-/* Bildirim */
+/* Stabil Bildirim Sistemi */
 .notification {
     position: fixed;
     top: 1rem;
@@ -460,12 +483,25 @@ body {
     padding: 0.5rem 1rem;
     border-radius: 0.375rem;
     font-size: 0.875rem;
-    z-index: 50;
+    z-index: 1000;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    pointer-events: none; /* Tıklamaları engellemez */
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease-out;
+    max-width: 250px;
+    word-wrap: break-word;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .notification-success {
     background-color: #10b981;
+    font-size: 0.75rem; /* Daha küçük boyut */
+    padding: 0.25rem 0.75rem;
 }
 
 .notification-center {
@@ -473,6 +509,9 @@ body {
     top: 1rem;
     left: 50%;
     transform: translateX(-50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.5s ease-out;
     background: linear-gradient(to right, #4ade80, #3b82f6);
     color: white;
     padding: 0.75rem 1.5rem;
