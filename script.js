@@ -296,7 +296,36 @@ function automaticSyllableBreak(word) {
         'öğretmen': ['Öğ', 'ret', 'men'],
         'bilgisayar': ['Bil', 'gi', 'sa', 'yar'],
         'çiçekler': ['Çi', 'çek', 'ler'],
-        'cumhuriyet': ['Cum', 'hu', 'ri', 'yet']
+        'cumhuriyet': ['Cum', 'hu', 'ri', 'yet'],
+        
+        // Tek hece kelimeler - yanlış hecelenmesini önle
+        'flüt': ['Flüt'],
+        'spor': ['Spor'],
+        'tren': ['Tren'],
+        'plan': ['Plan'],
+        'krem': ['Krem'],
+        'gres': ['Gres'],
+        'fren': ['Fren'],
+        'pres': ['Pres'],
+        'kral': ['Kral'],
+        'gram': ['Gram'],
+        'tram': ['Tram'],
+        'frak': ['Frak'],
+        'prim': ['Prim'],
+        'trim': ['Trim'],
+        'klep': ['Klep'],
+        'klon': ['Klon'],
+        'plak': ['Plak'],
+        'frak': ['Frak'],
+        'stil': ['Stil'],
+        'stok': ['Stok'],
+        'stop': ['Stop'],
+        'grup': ['Grup'],
+        'bluz': ['Bluz'],
+        'plus': ['Plus'],
+        'prens': ['Prens'],
+        'trans': ['Trans'],
+        'stres': ['Stres']
     };
 
     // Bilinen kelimeler için doğrudan dön
